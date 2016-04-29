@@ -13,4 +13,8 @@ public class QueueManager {
         this.queue.add(url);
     }
 
+    public String getURL() {
+        return "www.google.com";
+    }
+
 }
