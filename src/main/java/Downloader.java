@@ -23,7 +23,6 @@ public class Downloader implements Runnable {
         Thread t2 = new Thread(d2);
         Thread t3 = new Thread(d3);
 
-
         t1.start();
         t2.start();
         t3.start();
