@@ -12,9 +12,14 @@ public class Crawler {
 
     private List<String> links = new LinkedList<String>();
     private Document htmlDocument;
+    private Boolean status = false;
 
     public Crawler(String url) {
-        this.crawl(url);
+        this.status = this.crawl(url);
+    }
+
+    public boolean status() {
+        return this.status;
     }
 
     // This method retrive the page and fill a list with all

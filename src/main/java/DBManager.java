@@ -56,12 +56,17 @@ public class DBManager {
         return links;
     }
 
-    public void updateURL(int ID) throws SQLException {
+    public void updateURL(int ID) {
         String query = "UPDATE urls SET visited_date = date('now') WHERE ID = ?;";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, ID);
-        ps.execute();
-        ps.close();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, ID);
+            ps.execute();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Could not update visited_date for id=" + ID);
+        }
     }
 
     public void insertURL(String url) {
