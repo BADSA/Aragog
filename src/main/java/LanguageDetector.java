@@ -6,15 +6,16 @@ import com.optimaize.langdetect.profiles.LanguageProfileReader;
 import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class LanguageDetector {
     //load all languages:
-
-    public String detect(String text) {
-
-        List<LanguageProfile> languageProfiles = null;
-
+    public static  List<LanguageProfile> languageProfiles = null;
+    public static  com.optimaize.langdetect.LanguageDetector  languageDetector = null;
+    public static TextObjectFactory textObjectFactory = null;
+    public void init() {
         try {
             languageProfiles = new LanguageProfileReader().readAllBuiltIn();
 
@@ -23,20 +24,25 @@ public class LanguageDetector {
         }
 
         //build language detector:
-        com.optimaize.langdetect.LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+        languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
                 .withProfiles(languageProfiles)
                 .build();
 
         //create a text object factory
-        TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+         textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+    }
 
-        //query:
+    public List<String> detect(String text) {
+        List<String> languages = new ArrayList<String>();
+
         TextObject textObject = textObjectFactory.forText(text);
         List<DetectedLanguage> detected = languageDetector.getProbabilities(textObject);
+
         for(DetectedLanguage dl: detected) {
-            System.out.println(dl.toString());
+            languages.add(dl.getLocale().getLanguage());
         }
-        return "";
+
+        return languages;
     }
 
 
