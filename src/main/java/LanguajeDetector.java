@@ -9,12 +9,8 @@ import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
 import com.google.common.base.Optional;
-
 import java.util.List;
 
-/**
- * Created by sd on 5/1/16.
- */
 public class LanguajeDetector {
     //load all languages:
 

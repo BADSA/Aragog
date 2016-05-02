@@ -1,5 +1,4 @@
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 
@@ -11,12 +10,14 @@ public class Settings {
     public static void load() {
         try {
             Properties props = new Properties();
-            FileInputStream fIS = new FileInputStream("./settings.properties");
+            System.out.println();
+            FileInputStream fIS = new FileInputStream("./config/settings.properties");
             props.load(fIS);
 
-            database = props.getProperty("databaseName");
-            downloadFolder = props.getProperty("downloadFolder");
-            logPath = props.getProperty("logPath");
+            String userDir = System.getProperty("user.home");
+            database = props.getProperty("databaseName").replace("~", userDir);
+            downloadFolder = props.getProperty("downloadFolder").replace("~", userDir);
+            logPath = props.getProperty("logPath").replace("~", userDir);
 
             fIS.close();
         } catch (Exception e) {
