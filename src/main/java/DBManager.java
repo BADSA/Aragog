@@ -21,7 +21,7 @@ public class DBManager {
     public List<Pair<Integer, String>> getURLs(int days) throws SQLException {
         List<Pair<Integer, String>> links = new ArrayList<Pair<Integer, String>>();
 
-        String query = "SELECT * FROM urls WHERE visited_date IS NOT NULL;";
+        String query = "SELECT * FROM urls WHERE visited_date IS NOT NULL LIMIT 30;";
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
@@ -41,7 +41,7 @@ public class DBManager {
 
         }
 
-        query = "SELECT * FROM urls WHERE visited_date IS NULL;";
+        query = "SELECT * FROM urls WHERE visited_date IS NULL LIMIT 30;";
         ps = connection.prepareStatement(query);
         rs = ps.executeQuery();
 
@@ -102,6 +102,12 @@ public class DBManager {
         }
 
         return true;
+    }
+
+    public void inserURLList(List<String> URLList) {
+        for(String url: URLList){
+            this.insertURL(url);
+        }
     }
 
 /*

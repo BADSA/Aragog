@@ -18,6 +18,7 @@ public class Settings {
             database = props.getProperty("databaseName").replace("~", userDir);
             downloadFolder = props.getProperty("downloadFolder").replace("~", userDir);
             logPath = props.getProperty("logPath").replace("~", userDir);
+            stopWordsPath = props.getProperty("stopWordsPath").replace("~", userDir);
             fIS.close();
         } catch (Exception e) {
             System.out.println("Configuration file doesn't exists.");

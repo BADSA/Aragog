@@ -71,6 +71,7 @@ public class TextProcessor {
                 inFile = new Scanner(new File(path)).useDelimiter("\n");
             } catch (FileNotFoundException e) {
                 System.out.println("Could not find stop words for " + l);
+                return stopWords;
             }
 
             while (inFile.hasNext()) {

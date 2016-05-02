@@ -16,12 +16,13 @@ public class Downloader implements Runnable {
         Settings.load();
         this.id = fileMgr.getCurrId();
         this.urlInfo = queueMgr.getURL();
+        System.out.println(this.urlInfo.getValue());
         this.crawler = new Crawler(this.urlInfo.getValue());
     }
 
     /* Returns the text of the document */
     private String getDocument() {
-        return this.crawler.getDocument();
+        return this.crawler.getText();
     }
 
     /*
@@ -37,6 +38,7 @@ public class Downloader implements Runnable {
 
             List<String> links = this.crawler.getLinks();
             fileMgr.addLinks(this.id, links); // Save links
+            dbMan.inserURLList(links);
 
             String document  = this.getDocument();
             fileMgr.addText(this.id, document); // Save document text

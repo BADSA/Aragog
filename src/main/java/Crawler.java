@@ -1,7 +1,6 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,36 +28,51 @@ public class Crawler {
             Connection connection = Jsoup.connect(url);//.userAgent(USER_AGENT);
             Document htmlDocument = connection.get();
             this.htmlDocument = htmlDocument;
-            if(connection.response().statusCode() == 200) {// 200 is the HTTP OK status code
+            if (connection.response().statusCode() != 200) {// 200 is the HTTP OK status code
                 return false;
             }
 
-            if(!connection.response().contentType().contains("text/html")) {
+            if (!connection.response().contentType().contains("text/html")) {
                 return false;
             }
 
             Elements linksOnPage = htmlDocument.select("a[href]");
 
-            for(Element link : linksOnPage) {
+            for (Element link : linksOnPage) {
                 this.links.add(link.absUrl("href"));
             }
 
             return true;
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             // We were not successful in our HTTP request
             return false;
         }
     }
 
     // Return page content
-    public String getDocument(){
+    public String getDocument() {
         return this.htmlDocument.toString();
     }
 
+    public String getText(){
+        String html = this.htmlDocument.toString();
+        String text = Jsoup.parse(html).text();
+        return text;
+    }
+
     // Return all collected links as a list
-    public List<String> getLinks()
-    {
+    public List<String> getLinks() {
         return this.links;
     }
 
+    /*
+    public static void main(String args[]) {
+        Crawler cw = new Crawler("http://www.hola.com");
+        if (cw.status()) {
+            cw.getLinks();
+            cw.getDocument();
+        }
+
+    }
+*/
 }
