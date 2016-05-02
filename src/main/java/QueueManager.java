@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class QueueManager {
     private ConcurrentLinkedQueue<Pair<Integer, String>> queue;
 
-    public Pair<Integer, String> getUrl() {
+    public Pair<Integer, String> getURL() {
         return this.queue.poll();
     }
 
@@ -13,8 +13,5 @@ public class QueueManager {
         this.queue.add(url);
     }
 
-    public String getURL() {
-        return "www.google.com";
-    }
 
 }

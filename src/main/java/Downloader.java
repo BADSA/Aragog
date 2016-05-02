@@ -1,3 +1,4 @@
+import javafx.util.Pair;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -7,17 +8,26 @@ import java.net.URL;
 
 public class Downloader implements Runnable {
 
-    private String id, url;
-    private static FileManager fileMgr = new FileManager("/home/melalonso/DOCS/");
+    private String id;
+    private Pair<Integer, String> urlInfo;
+    private static FileManager fileMgr = new FileManager(Settings.downloadFolder);
     private static QueueManager queueMgr = new QueueManager();
+
+    private Crawler crawler;
 
     public Downloader() {
         this.id = fileMgr.getCurrId();
-        this.url = queueMgr.getURL();
+        this.urlInfo = queueMgr.getURL();
     }
 
     private URL getDocument() throws MalformedURLException {
-        URL doc = new URL(this.url);
+        /*
+        String url = this.urlInfo.getValue();
+
+        this.crawler = new Crawler(url);
+        return this.crawler.getDocument();
+        */
+        URL doc = new URL(this.urlInfo.getValue());
         return doc;
     }
 
@@ -33,13 +43,15 @@ public class Downloader implements Runnable {
     public void run() {
         String pageText = null;
         try {
-            URL document = getDocument();
+            URL document = this.getDocument();
             pageText = IOUtils.toString(document);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String plainText = plainText(pageText);
-        String finalText = removeStopwords(plainText);
+        String plainText = this.plainText(pageText);
+        String finalText = this.removeStopwords(plainText);
+
+
     }
 
 }

@@ -13,10 +13,13 @@ public class Crawler {
     private List<String> links = new LinkedList<String>();
     private Document htmlDocument;
 
+    public Crawler(String url) {
+        this.crawl(url);
+    }
 
     // This method retrive the page and fill a list with all
     // Return false if text it is not a valid url
-    public boolean crawl(String url) {
+    private boolean crawl(String url) {
         try {
             Connection connection = Jsoup.connect(url);//.userAgent(USER_AGENT);
             Document htmlDocument = connection.get();
@@ -43,7 +46,7 @@ public class Crawler {
     }
 
     // Return page content
-    public String getPageBody(){
+    public String getDocument(){
         return this.htmlDocument.toString();
     }
 
