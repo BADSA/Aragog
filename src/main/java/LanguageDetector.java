@@ -6,12 +6,8 @@ import com.optimaize.langdetect.profiles.LanguageProfileReader;
 import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
-
 import java.util.List;
 
-/**
- * Created by sd on 5/1/16.
- */
 public class LanguageDetector {
     //load all languages:
 
@@ -44,11 +40,4 @@ public class LanguageDetector {
     }
 
 
-    public static void main(String args[]) {
-        LanguageDetector ld = new LanguageDetector();
-
-        System.out.println(ld.detect("Hola, esto es una prueba. I love this place because I love it"));
-
-
-    }
 }
