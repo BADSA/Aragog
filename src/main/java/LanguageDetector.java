@@ -1,21 +1,18 @@
 import com.optimaize.langdetect.DetectedLanguage;
-import com.optimaize.langdetect.LanguageDetector;
 import com.optimaize.langdetect.LanguageDetectorBuilder;
-import com.optimaize.langdetect.i18n.LdLocale;
 import com.optimaize.langdetect.ngram.NgramExtractors;
 import com.optimaize.langdetect.profiles.LanguageProfile;
 import com.optimaize.langdetect.profiles.LanguageProfileReader;
 import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
-import com.google.common.base.Optional;
 
 import java.util.List;
 
 /**
  * Created by sd on 5/1/16.
  */
-public class LanguajeDetector {
+public class LanguageDetector {
     //load all languages:
 
     public String detect(String text) {
@@ -30,7 +27,7 @@ public class LanguajeDetector {
         }
 
         //build language detector:
-        LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+        com.optimaize.langdetect.LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
                 .withProfiles(languageProfiles)
                 .build();
 
@@ -48,7 +45,7 @@ public class LanguajeDetector {
 
 
     public static void main(String args[]) {
-        LanguajeDetector ld = new LanguajeDetector();
+        LanguageDetector ld = new LanguageDetector();
 
         System.out.println(ld.detect("Hola, esto es una prueba. I love this place because I love it"));
 

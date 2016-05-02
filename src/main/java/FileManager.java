@@ -1,12 +1,8 @@
 import org.apache.commons.io.FileUtils;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.nio.channels.OverlappingFileLockException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.io.File;
@@ -43,30 +39,46 @@ public class FileManager {
         FileUtils.writeStringToFile(currIdFile, "1");
     }
 
-    public void addLinks(String folderID, List<String> links) throws IOException {
+    public void addLinks(String folderID, List<String> links) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File linksFile = new File(folderPath + linksFilename);
         for (String l : links) {
-            FileUtils.writeStringToFile(linksFile, l + "\n", true);
+            try {
+                FileUtils.writeStringToFile(linksFile, l + "\n", true);
+            } catch (IOException e) {
+                System.out.println("Could not write links to folder "+folderID);
+            }
         }
     }
 
-    public void addProcessedText(String folderID, InputStream text) throws IOException {
+    public void addProcessedText(String folderID, String text) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File processedTextFile = new File(folderPath + processedFilename);
-        FileUtils.copyInputStreamToFile(text, processedTextFile);
+        try {
+            FileUtils.writeStringToFile(processedTextFile, text);
+        } catch (IOException e) {
+            System.out.println("Could not write processed text to folder "+folderID);
+        }
     }
 
-    public void addText(String folderID, URL doc) throws IOException {
+    public void addText(String folderID, String doc) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File textFile = new File(folderPath + textFileName);
-        FileUtils.copyURLToFile(doc, textFile);
+        try {
+            FileUtils.writeStringToFile(textFile, doc, true);
+        } catch (IOException e) {
+            System.out.println("Could not write document text to folder "+folderID);
+        }
     }
 
-    public void addUrl(String folderID, String url) throws IOException {
+    public void addUrl(String folderID, String url) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File urlFile = new File(folderPath + urlFileName);
-        FileUtils.writeStringToFile(urlFile, url, true);
+        try {
+            FileUtils.writeStringToFile(urlFile, url, true);
+        } catch (IOException e) {
+            System.out.println("Could not write URL to folder "+folderID);
+        }
     }
 
     public String getCurrId() {

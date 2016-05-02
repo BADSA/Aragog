@@ -13,23 +13,14 @@ public class Scheduler {
         this.queueManager = new QueueManager();
     }
 
-    private void loadURLS() throws SQLException {
+    public void loadURLS() {
+        /*
         List<Pair<Integer, String>> urlsList = dbManager.getURLs();
 
         for (Pair<Integer, String> url : urlsList) {
            queueManager.addURL(url);
         }
-    }
-
-    public static void main (String args[]) {
-        Scheduler sc = new Scheduler();
-        try {
-            sc.loadURLS();
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            // TODO log exception
-        }
-
+        */
     }
 
 }
