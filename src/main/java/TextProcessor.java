@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -10,6 +11,12 @@ import java.util.Scanner;
     the document's text.
  */
 public class TextProcessor {
+
+    public static LanguageDetector ld = new LanguageDetector();
+
+    public TextProcessor() {
+        ld.init();
+    }
 
     /*
         Method that removes accents, uppercase
@@ -28,9 +35,7 @@ public class TextProcessor {
         the detected languages in the text.
      */
     public String removeStopWords(String content) {
-        LanguageDetector ld = new LanguageDetector();
-        ArrayList<String> langs = new ArrayList(); //ld.detect(content);
-        langs.add("es");
+        List<String> langs = ld.detect(content);
         HashMap<String, Boolean> stopWords = getStopWords(langs);
 
         content = content.trim().replaceAll("\\s+", " ");
@@ -53,7 +58,7 @@ public class TextProcessor {
         return s;
     }
 
-    private HashMap getStopWords(ArrayList<String> langs) {
+    private HashMap getStopWords(List<String> langs) {
         String w;
         Scanner inFile = null;
         HashMap<String, Boolean> stopWords = new HashMap<String, Boolean>();

@@ -15,6 +15,7 @@ public class LanguageDetector {
     public static  List<LanguageProfile> languageProfiles = null;
     public static  com.optimaize.langdetect.LanguageDetector  languageDetector = null;
     public static TextObjectFactory textObjectFactory = null;
+
     public void init() {
         try {
             languageProfiles = new LanguageProfileReader().readAllBuiltIn();
