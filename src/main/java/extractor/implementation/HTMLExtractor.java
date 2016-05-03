@@ -1,6 +1,6 @@
-package Extractor.implementation;
+package extractor.implementation;
 
-import Extractor.Extractor;
+import extractor.Extractor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

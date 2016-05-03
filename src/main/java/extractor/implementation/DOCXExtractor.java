@@ -1,6 +1,6 @@
-package Extractor.implementation;
+package extractor.implementation;
 
-import Extractor.Extractor;
+import extractor.Extractor;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;

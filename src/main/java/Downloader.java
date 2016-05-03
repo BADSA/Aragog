@@ -1,6 +1,12 @@
-import Extractor.Extractor;
-import Extractor.implementation.ExtractorManager;
+import config.Settings;
+import extractor.Extractor;
+import extractor.implementation.ExtractorManager;
 import javafx.util.Pair;
+import log.LogEntity;
+import managers.DBManager;
+import managers.FileManager;
+import managers.QueueManager;
+import utils.TextProcessor;
 
 import java.io.IOException;
 import java.util.List;

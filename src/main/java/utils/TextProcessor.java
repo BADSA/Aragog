@@ -1,7 +1,8 @@
+package utils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.Normalizer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -70,7 +71,7 @@ public class TextProcessor {
         HashMap<String, Boolean> stopWords = new HashMap<String, Boolean>();
 
         for (String l : langs) {
-            // String path = Settings.stopwordsPath + l + ".words";
+            // String path = config.Settings.stopwordsPath + l + ".words";
             String path = "./config/stopwords/" + l + ".words";
 
             try {

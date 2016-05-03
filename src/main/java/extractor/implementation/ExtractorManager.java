@@ -1,6 +1,6 @@
-package Extractor.implementation;
+package extractor.implementation;
 
-import Extractor.Extractor;
+import extractor.Extractor;
 import org.apache.commons.io.FilenameUtils;
 
 

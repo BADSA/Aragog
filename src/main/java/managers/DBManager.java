@@ -1,3 +1,6 @@
+package managers;
+
+import config.Settings;
 import javafx.util.Pair;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

@@ -1,4 +1,4 @@
-package Extractor.implementation;
+package extractor.implementation;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -7,22 +7,19 @@ import org.jdom.Text;
 import org.jdom.input.SAXBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipEntry;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import Extractor.Extractor;
+import extractor.Extractor;
 
 public class ODTExtractor extends Extractor {
 
 
     private StringBuffer TextBuffer;
-    /*\* Creates a new instance of Extractor.implementation.ODTExtractor \*/
+    /*\* Creates a new instance of extractor.implementation.ODTExtractor \*/
 
     //Process text elements recursively
     public void processElement(Object o) {

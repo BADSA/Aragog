@@ -1,3 +1,5 @@
+package managers;
+
 import javafx.util.Pair;
 
 import java.util.concurrent.ConcurrentLinkedQueue;

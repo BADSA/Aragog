@@ -1,10 +1,10 @@
-package Extractor.implementation;
+package extractor.implementation;
 
 import java.io.*;
 
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.text.PDFTextStripper;
-import Extractor.Extractor;
+import extractor.Extractor;
 
 public class PDFExtractor extends Extractor {
 
