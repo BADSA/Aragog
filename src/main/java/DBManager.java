@@ -3,18 +3,54 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class DBManager {
 
     private static Connection connection;
+    private static HashMap<String, Boolean> blackList = new HashMap<String, Boolean>();
+
+    public void loadBlackList() {
+        FileInputStream fs = null;
+        try {
+            fs = new FileInputStream(Settings.blackListFile);
+            Scanner sn = new Scanner(fs);
+
+            while (sn.hasNext()) {
+                String url = sn.next();
+
+                try {
+                    String host;
+                    if (url.contains("http://")) {
+                        host = new URI(url).getHost().replace("www.", "");
+                    } else {
+                        host = new URI("http://" + url).getHost().replace("www.", "");
+                    }
+                    System.out.println("Adding " + host + "to blacklist ");
+                    blackList.put(host, true);
+                } catch (URISyntaxException e) {
+                    System.out.println("Syntax URI error while adding " + url + "to blacklist");
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Problem occurred loading blacklist file. No domains will be excluded.");
+        }
+    }
 
     public void setConnection(String databaseName) throws SQLException, ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
+
     public List<Pair<Integer, String>> getURLs(int days) throws SQLException {
         List<Pair<Integer, String>> links = new ArrayList<Pair<Integer, String>>();
 
@@ -32,7 +68,7 @@ public class DBManager {
 
 
             DateTime visitedDate = fmt.parseDateTime(date);
-            if (visitedDate.isBefore(limitTime)){
+            if (visitedDate.isBefore(limitTime)) {
                 links.add(new Pair<Integer, String>(id, url));
             }
 
@@ -68,11 +104,19 @@ public class DBManager {
 
     public void insertURL(String url) {
         String query = "INSERT INTO urls (url, visited_date) values (?, NULL);";
+        String domain = null;
         try {
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, url);
-        ps.execute();
-        ps.close();
+            domain = new URI(url).getHost().replace("www.", "");
+            if (!blackList.containsKey(domain)) {
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, url);
+                ps.execute();
+                ps.close();
+            } else {
+                System.out.println("URL domain is listed on the blacklist. Skipping " + url);
+            }
+        } catch (URISyntaxException e) {
+            //e.printStackTrace();
         } catch (Exception e) {
             //System.out.println(e.getMessage() + " - URL: "+ url);
         }
@@ -102,7 +146,7 @@ public class DBManager {
     }
 
     public void inserURLList(List<String> URLList) {
-        for(String url: URLList){
+        for (String url : URLList) {
             this.insertURL(url);
         }
     }
