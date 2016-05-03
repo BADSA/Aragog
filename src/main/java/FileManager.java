@@ -1,6 +1,7 @@
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URL;
@@ -8,7 +9,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.text.MessageFormat;
 import java.util.List;
-import java.io.File;
+
+import static java.util.Arrays.asList;
 
 
 /*
@@ -24,6 +26,8 @@ public class FileManager {
     public static final String processedFilename = "/processed";
     public static final String textFileName = "/text";
     public static final String urlFileName = "/url";
+    public static final List<String> extensions =  asList("doc", "docx", "pdf", "txt", "odt");
+
 
 
     public FileManager(String savePath) {
@@ -108,7 +112,13 @@ public class FileManager {
 
     public String getDocument(String url, String id) throws IOException{
         String ext = FilenameUtils.getExtension(url);
-        File file = new File(savePath +"/"+ id +"/raw."+ext);
+        File file;
+        if (extensions.contains(ext)) {
+            file = new File(savePath +"/"+ id +"/raw."+ext);
+        }else {
+            file = new File(savePath +"/"+ id +"/raw.html");
+        }
+
         FileUtils.copyURLToFile(new URL(url),file);
 
         return file.getPath();

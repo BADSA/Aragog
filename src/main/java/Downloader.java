@@ -1,12 +1,9 @@
 import Extractor.Extractor;
 import Extractor.implementation.ExtractorManager;
-import Extractor.implementation.HTMLExtractor;
 import javafx.util.Pair;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 public class Downloader implements Runnable {
 
@@ -23,7 +20,7 @@ public class Downloader implements Runnable {
         Settings.load();
         this.id = fileMgr.getCurrId();
         this.urlInfo = queueMgr.getURL();
-        System.out.println(this.urlInfo.getValue());
+        System.out.println("URL: "+ this.urlInfo.getValue());
         this.fileExtractor = new ExtractorManager(this.urlInfo.getValue()).getExtractor();
     }
 
@@ -38,11 +35,6 @@ public class Downloader implements Runnable {
 
         try {
             String filePath = fileMgr.getDocument(url, this.id);
-
-            System.out.println("FILE PATH ==================================================");
-            System.out.println(filePath);
-            System.out.println("FILE PATH ==================================================");
-
 
             fileMgr.addUrl(this.id, url); // Save url
 

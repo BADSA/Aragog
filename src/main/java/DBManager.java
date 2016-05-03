@@ -4,11 +4,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.sql.*;
-import java.util.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBManager {
 
@@ -77,7 +74,7 @@ public class DBManager {
         ps.execute();
         ps.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage() + " - URL: "+ url);
+            //System.out.println(e.getMessage() + " - URL: "+ url);
         }
     }
 
