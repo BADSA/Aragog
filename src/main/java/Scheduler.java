@@ -1,5 +1,7 @@
 import javafx.util.Pair;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ public class Scheduler {
         try {
             this.dbManager = new DBManager();
             this.dbManager.setConnection(Settings.database);
+            this.dbManager.loadBlackList();
             this.queueManager = new QueueManager();
         } catch (Exception e) {
             System.out.println("Error creating scheduler.");
@@ -48,8 +51,10 @@ public class Scheduler {
                 this.queueManager.addURL(url);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Error occurred with the database.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Error occurred while loading INIT file: INIT file not found");
         }
     }
 
