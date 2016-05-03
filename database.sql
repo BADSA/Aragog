@@ -1,0 +1,6 @@
+CREATE TABLE urls (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   url TEXT UNIQUE NOT NULL,
+   visited_date DATE
+   );
+

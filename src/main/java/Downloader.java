@@ -1,7 +1,7 @@
 import config.Settings;
 import extractor.Extractor;
 import extractor.implementation.ExtractorManager;
-import javafx.util.Pair;
+import utils.Pair;
 import log.LogEntity;
 import managers.DBManager;
 import managers.FileManager;

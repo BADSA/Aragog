@@ -1,5 +1,5 @@
 import config.Settings;
-import javafx.util.Pair;
+import utils.Pair;
 import managers.DBManager;
 import managers.QueueManager;
 

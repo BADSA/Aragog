@@ -34,14 +34,13 @@ public class Aragog {
     */
     public static void main(String[] args) {
         Scheduler sch = new Scheduler();
-        sch.loadURLS();
-        int poolsize = Integer.parseInt("5");//args[0]);
+        int poolsize = Integer.parseInt("4");//args[0]);
         Aragog aragog = new Aragog();
 
         while (true) {
+            sch.loadURLS();
             System.out.println("Executing..");
             aragog.execute(10, poolsize);
-            sch.loadURLS();
             if (sch.isQueueEmpty()) {
                 System.out.println("No more links to process");
                 break;

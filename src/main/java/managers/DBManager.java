@@ -1,7 +1,7 @@
 package managers;
 
 import config.Settings;
-import javafx.util.Pair;
+import utils.Pair;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -40,10 +40,10 @@ public class DBManager {
                     } else {
                         host = new URI("http://" + url).getHost().replace("www.", "");
                     }
-                    System.out.println("Adding " + host + "to blacklist ");
+                    System.out.println("Adding " + host + " to blacklist ");
                     blackList.put(host, true);
                 } catch (URISyntaxException e) {
-                    System.out.println("Syntax URI error while adding " + url + "to blacklist");
+                    System.out.println("Syntax URI error while adding " + url + " to blacklist");
                 }
             }
 
