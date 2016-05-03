@@ -25,7 +25,7 @@ public class ExtractorManager {
         } else if (ext.equals("odt")) {
             return new ODTExtractor();
         } else if (ext.equals("doc") || ext.equals("docx")) {
-            return null;//return new DOCXExtractor();;
+            return new DOCXExtractor(ext);
         } else {
             return new HTMLExtractor();
         }

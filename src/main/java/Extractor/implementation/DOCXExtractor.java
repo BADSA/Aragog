@@ -1,69 +1,71 @@
-/*
- * This class is used to read .doc and .docx files
- *
- * @author Developer
- *
- */
+package Extractor.implementation;
 
-import java.io.ByteArrayOutputStream;
+import Extractor.Extractor;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import org.apache.tika.detect.DefaultDetector;
-import org.apache.tika.detect.Detector;
-import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.BodyContentHandler;
-import org.xml.sax.ContentHandler;
+import java.io.FileInputStream;
+import java.io.IOException;
 
-class TextExtractor {
-    private OutputStream outputstream;
-    private ParseContext context;
-    private Detector detector;
-    private Parser parser;
-    private Metadata metadata;
-    private String extractedText;
+public class DOCXExtractor extends Extractor{
 
-    public TextExtractor() {
-        context = new ParseContext();
-        detector = new DefaultDetector();
-        parser = new AutoDetectParser(detector);
-        context.set(Parser.class, parser);
-        outputstream = new ByteArrayOutputStream();
-        metadata = new Metadata();
+
+    private String ext;
+
+    public DOCXExtractor(String ext) {
+        this.ext = ext;
     }
 
-    public void process(String filename) throws Exception {
-        URL url;
-        File file = new File(filename);
-        if (file.isFile()) {
-            url = file.toURI().toURL();
-        } else {
-            url = new URL(filename);
+
+    @Override
+    public String getText(String filename) {
+        if (this.ext.equals("doc")) {
+            return this.extractFromDoc(filename);
+        }else{
+            return this.extracFromDocx(filename);
         }
-        InputStream input = TikaInputStream.get(url, metadata);
-        ContentHandler handler = new BodyContentHandler(outputstream);
-        parser.parse(input, handler, metadata, context);
-        input.close();
     }
 
-    public void getString() {
-        //Get the text into a String object
-        extractedText = outputstream.toString();
-        //Do whatever you want with this String object.
-        System.out.println(extractedText);
+    private String extractFromDoc(String filename) {
+        File file = null;
+        WordExtractor extractor = null;
+        String text = "";
+        try {
+
+            file = new File(filename);
+            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+            HWPFDocument document = new HWPFDocument(fis);
+            extractor = new WordExtractor(document);
+            String[] fileData = extractor.getParagraphText();
+            for (int i = 0; i < fileData.length; i++) {
+                if (fileData[i] != null)
+                    text += fileData[i];
+            }
+
+            return text;
+        } catch (Exception exep) {
+            exep.printStackTrace();
+        }
+
+        return text;
     }
 
-    public static void main(String args[]) throws Exception {
+    private String extracFromDocx(String filename) {
+        XWPFDocument docx = null;
+        try {
+            docx = new XWPFDocument(
+                    new FileInputStream(filename));
 
-            TextExtractor textExtractor = new TextExtractor();
-            textExtractor.process("SONGS.doc");
-            textExtractor.getString();
+            //using XWPFWordExtractor Class
+            XWPFWordExtractor we = new XWPFWordExtractor(docx);
+            return we.getText();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
