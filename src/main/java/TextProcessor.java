@@ -25,7 +25,7 @@ public class TextProcessor {
     public String plainText(String content) {
         content = stripAccents(content); // Remove accents
         content = content.toLowerCase(); // Removing uppercase
-        content = content.replaceAll("[^a-z' ]", ""); // Leave only letters and apostrophes
+        content = content.replaceAll("[^a-z'\n ]", " "); // Leave only letters and apostrophes
         content = content.trim().replaceAll("\\s+", " ");
         return content;
     }
@@ -33,7 +33,7 @@ public class TextProcessor {
     /*
         Removes the stop words based on what are
         the detected languages in the text.
-     */
+    */
     public String removeStopWords(String content) {
         List<String> langs = ld.detect(content);
         HashMap<String, Boolean> stopWords = getStopWords(langs);

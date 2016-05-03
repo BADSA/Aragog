@@ -15,7 +15,7 @@ public class TXTExtractor extends Extractor {
             Scanner sn = new Scanner(fs);
             String text = "";
             while (sn.hasNext()) {
-                text += sn.next();
+                text += sn.next() + " ";
             }
             return text;
         } catch (FileNotFoundException e) {

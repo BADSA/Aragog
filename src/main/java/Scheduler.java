@@ -14,9 +14,13 @@ public class Scheduler {
             this.dbManager.setConnection(Settings.database);
             this.queueManager = new QueueManager();
         } catch (Exception e) {
-            // TODO log exception
+            System.out.println("Error creating scheduler.");
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean isQueueEmpty() {
+        return this.queueManager.isEmpty();
     }
 
     public void loadURLS() {
@@ -33,9 +37,11 @@ public class Scheduler {
 
             List<Pair<Integer, String>> urlsList = dbManager.getURLs(30);
 
+            this.queueManager.clearQueue();
             for (Pair<Integer, String> url : urlsList) {
                 this.queueManager.addURL(url);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

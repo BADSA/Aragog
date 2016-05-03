@@ -42,7 +42,7 @@ public class DOCXExtractor extends Extractor{
             String[] fileData = extractor.getParagraphText();
             for (int i = 0; i < fileData.length; i++) {
                 if (fileData[i] != null)
-                    text += fileData[i];
+                    text += fileData[i] + " ";
             }
 
             return text;

@@ -107,28 +107,4 @@ public class DBManager {
         }
     }
 
-/*
-    public static void main(String args[]) {
-        Settings.load();
-        try {
-            System.out.println(Settings.database);
-
-            DBManager dbMngr = new DBManager(Settings.database);
-
-            dbMngr.insertURL("hello2");
-            System.out.println(dbMngr.checkEmptyDB());
-
-            for (Pair<Integer, String> linkInfo : dbMngr.getURLs(30)) {
-                System.out.println(linkInfo.getKey() + " " + linkInfo.getValue());
-            }
-
-            dbMngr.updateURL(8);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-*/
 }

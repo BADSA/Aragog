@@ -21,6 +21,7 @@ public class LanguageDetector {
             languageProfiles = new LanguageProfileReader().readAllBuiltIn();
 
         } catch (Exception e) {
+            System.out.println("Error recognizing languages");
             System.out.println(e.getMessage());
         }
 

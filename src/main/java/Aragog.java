@@ -12,14 +12,8 @@ public class Aragog {
                 = Executors.newFixedThreadPool(poolsize);
 
         piscina.execute(new Downloader());
-        Downloader[] downloaders = new Downloader[threads];
         for (int t = 0; t < threads; t++) {
-            try{
-            downloaders[t] = new Downloader();
-            piscina.execute(downloaders[t]); }
-            catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            piscina.execute(new Downloader());
         }
 
         piscina.shutdown();
@@ -31,13 +25,17 @@ public class Aragog {
     public static void main(String[] args) {
         Scheduler sch = new Scheduler();
         sch.loadURLS();
-        int poolsize = Integer.parseInt(args[0]);
+        int poolsize = Integer.parseInt("4");
         Aragog aragog = new Aragog();
 
         while (true) {
             System.out.println("Executing..");
-            aragog.execute(5, poolsize);
+            aragog.execute(10, poolsize);
             sch.loadURLS();
+            if (sch.isQueueEmpty()) {
+                System.out.println("No more links to process");
+                break;
+            }
             System.out.println("Executed");
         }
     }

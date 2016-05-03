@@ -11,7 +11,6 @@ public class Settings {
     public static void load() {
         try {
             Properties props = new Properties();
-            System.out.println();
             FileInputStream fIS = new FileInputStream("./config/settings.properties");
             props.load(fIS);
             String userDir = System.getProperty("user.home");

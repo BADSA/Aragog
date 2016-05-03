@@ -29,7 +29,6 @@ public class FileManager {
     public static final List<String> extensions =  asList("doc", "docx", "pdf", "txt", "odt");
 
 
-
     public FileManager(String savePath) {
         this.savePath = savePath + folderName;
         try {
@@ -122,7 +121,18 @@ public class FileManager {
         FileUtils.copyURLToFile(new URL(url),file);
 
         return file.getPath();
+    }
 
+    public void removeDocument(String url, String id) throws IOException{
+        File file;
+        String ext = FilenameUtils.getExtension(url);
+        if (extensions.contains(ext)) {
+            file = new File(savePath +"/"+ id +"/raw."+ext);
+        } else {
+            file = new File(savePath +"/"+ id +"/raw.html");
+        }
+
+        FileUtils.deleteQuietly(file);
     }
 
 
