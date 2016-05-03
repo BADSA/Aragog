@@ -9,7 +9,7 @@ $ mvn clean install
 ```
 # Ejecución
 ```bash
-java -jar aragog_carnet.jar
+$ java -jar aragog_carnet.jar
 ```
 ## Nota
 Aragog utiliza una carpeta llamada config que se encuentra en este repositorio estos archivo debe encontrarse en el mismo forlder donde se ejecute el archivo .jar
