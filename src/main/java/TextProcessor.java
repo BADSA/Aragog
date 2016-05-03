@@ -9,7 +9,7 @@ import java.util.Scanner;
 /*
     Class that handles the operations in
     the document's text.
- */
+*/
 public class TextProcessor {
 
     public static LanguageDetector ld = new LanguageDetector();
@@ -51,13 +51,19 @@ public class TextProcessor {
         return finalContent;
     }
 
-
+    /*
+        Removes the accents from a text.
+    */
     private static String stripAccents(String s) {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return s;
     }
 
+    /*
+        Returns Hash with the stops words given the
+        recognized languages.
+     */
     private HashMap getStopWords(List<String> langs) {
         String w;
         Scanner inFile = null;

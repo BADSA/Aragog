@@ -1,7 +1,9 @@
 import java.io.FileInputStream;
 import java.util.Properties;
 
-
+/*
+    Loads needed settings for the application.
+*/
 public class Settings {
     public static String database = null;
     public static String downloadFolder = null;

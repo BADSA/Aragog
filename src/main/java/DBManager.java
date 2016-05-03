@@ -7,14 +7,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Class that takes control of the database.
+*/
 public class DBManager {
 
     private static Connection connection;
 
+    /*
+        Sets the connection with the SQLite database
+        and the database name.
+    */
     public void setConnection(String databaseName) throws SQLException, ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
+
+    /*
+        Returns list of URLs taking into account what are
+        not visited and older than "days".
+    */
     public List<Pair<Integer, String>> getURLs(int days) throws SQLException {
         List<Pair<Integer, String>> links = new ArrayList<Pair<Integer, String>>();
 
@@ -53,6 +65,9 @@ public class DBManager {
         return links;
     }
 
+    /*
+        Updates the specified URL with the current date.
+     */
     public void updateURL(int ID) {
         String query = "UPDATE urls SET visited_date = date('now') WHERE ID = ?;";
         PreparedStatement ps = null;
@@ -66,6 +81,10 @@ public class DBManager {
         }
     }
 
+    /*
+        Inserts new url in the database
+        for its future visit.
+    */
     public void insertURL(String url) {
         String query = "INSERT INTO urls (url, visited_date) values (?, NULL);";
         try {
@@ -78,14 +97,18 @@ public class DBManager {
         }
     }
 
+    /*
+        Closes the DB connection.
+    */
     public void closeConnection() throws SQLException {
         connection.close();
     }
 
+    /*
+        Checks if the database is empty.
+     */
     public boolean checkEmptyDB() throws SQLException {
-
         String query = "select count() from urls;";
-
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
@@ -101,6 +124,9 @@ public class DBManager {
         return true;
     }
 
+    /*
+        Loads database with given url list.
+    */
     public void inserURLList(List<String> URLList) {
         for(String url: URLList){
             this.insertURL(url);

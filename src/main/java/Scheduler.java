@@ -19,10 +19,16 @@ public class Scheduler {
         }
     }
 
+    /*
+        Checks if the queue is empty.
+     */
     public boolean isQueueEmpty() {
         return this.queueManager.isEmpty();
     }
 
+    /*
+        Loads URLs in the queue for the Downloaders.
+    */
     public void loadURLS() {
         try {
             if (this.dbManager.checkEmptyDB()) {

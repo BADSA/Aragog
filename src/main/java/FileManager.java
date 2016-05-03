@@ -45,6 +45,9 @@ public class FileManager {
         FileUtils.writeStringToFile(currIdFile, "1");
     }
 
+    /*
+        Adds list of links to the corresponding directory.
+     */
     public void addLinks(String folderID, List<String> links) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File linksFile = new File(folderPath + linksFilename);
@@ -57,6 +60,9 @@ public class FileManager {
         }
     }
 
+    /*
+        Adds processed text to the corresponding directory.
+    */
     public void addProcessedText(String folderID, String text) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File processedTextFile = new File(folderPath + processedFilename);
@@ -67,6 +73,9 @@ public class FileManager {
         }
     }
 
+    /*
+        Adds NON processed text to the corresponding directory.
+     */
     public void addText(String folderID, String doc) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File textFile = new File(folderPath + textFileName);
@@ -77,6 +86,9 @@ public class FileManager {
         }
     }
 
+    /*
+        Adds document URL to the corresponding directory.
+    */
     public void addUrl(String folderID, String url) {
         String folderPath = MessageFormat.format("{0}/{1}/", savePath, folderID);
         File urlFile = new File(folderPath + urlFileName);
@@ -87,6 +99,10 @@ public class FileManager {
         }
     }
 
+    /*
+        Returns the current ID for next
+        document.
+    */
     public String getCurrId() {
         String currId = "", nextId;
         try {
@@ -109,6 +125,9 @@ public class FileManager {
         return currId;
     }
 
+    /*
+        Downloads document and returns its path.
+    */
     public String getDocument(String url, String id) throws IOException{
         String ext = FilenameUtils.getExtension(url);
         File file;
@@ -123,6 +142,9 @@ public class FileManager {
         return file.getPath();
     }
 
+    /*
+        Removes the downloaded document by its id.
+    */
     public void removeDocument(String url, String id) throws IOException{
         File file;
         String ext = FilenameUtils.getExtension(url);

@@ -5,6 +5,10 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.List;
 
+/*
+    One of the main classes for downloading the
+    documents and saving them in the user directory.
+*/
 public class Downloader implements Runnable {
 
     private String id;

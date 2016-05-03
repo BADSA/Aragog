@@ -3,6 +3,10 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/*
+    Takes responsibility of the logging
+    for the application.
+*/
 public class LogEntity {
 
     public static Logger logger;
@@ -23,6 +27,9 @@ public class LogEntity {
         }
     }
 
+    /*
+        Writes given message in the logs file.
+    */
     public void write(String msg) {
         logger.info(msg);
     }

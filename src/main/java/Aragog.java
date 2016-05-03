@@ -6,6 +6,10 @@ import java.util.concurrent.Executors;
     of Aragog
 */
 public class Aragog {
+
+    /*
+        Starts each of the threads.
+    */
     public void execute(int threads, int poolsize) {
 
         ExecutorService piscina
@@ -22,10 +26,16 @@ public class Aragog {
         }
     }
 
+
+    /*
+        Point of start of Aragog.
+        The Main function executes the Scheduler and
+        the Downloaders.
+    */
     public static void main(String[] args) {
         Scheduler sch = new Scheduler();
         sch.loadURLS();
-        int poolsize = Integer.parseInt("4");
+        int poolsize = Integer.parseInt("5");//args[0]);
         Aragog aragog = new Aragog();
 
         while (true) {

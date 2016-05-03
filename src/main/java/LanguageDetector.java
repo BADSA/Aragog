@@ -10,6 +10,10 @@ import com.optimaize.langdetect.text.TextObjectFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Does the language recognition
+    for each of the documents.
+*/
 public class LanguageDetector {
     //load all languages:
     public static  List<LanguageProfile> languageProfiles = null;
@@ -34,6 +38,10 @@ public class LanguageDetector {
          textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
     }
 
+    /*
+        Receives a string with the document text
+        and performs the recognition.
+    */
     public List<String> detect(String text) {
         List<String> languages = new ArrayList<String>();
 
