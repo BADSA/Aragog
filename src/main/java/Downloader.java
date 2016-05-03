@@ -1,11 +1,18 @@
+import Extractor.Extractor;
+import Extractor.implementation.ExtractorManager;
+import Extractor.implementation.HTMLExtractor;
 import javafx.util.Pair;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Downloader implements Runnable {
 
     private String id;
     private Pair<Integer, String> urlInfo;
-    private Crawler crawler;
+    private Extractor fileExtractor;
     private static FileManager fileMgr = new FileManager(Settings.downloadFolder);
     private static QueueManager queueMgr = new QueueManager();
     private static TextProcessor tp = new TextProcessor();
@@ -17,13 +24,9 @@ public class Downloader implements Runnable {
         this.id = fileMgr.getCurrId();
         this.urlInfo = queueMgr.getURL();
         System.out.println(this.urlInfo.getValue());
-        this.crawler = new Crawler(this.urlInfo.getValue());
+        this.fileExtractor = new ExtractorManager(this.urlInfo.getValue()).getExtractor();
     }
 
-    /* Returns the text of the document */
-    private String getDocument() {
-        return this.crawler.getText();
-    }
 
     /*
         Does the whole process for each of the
@@ -33,23 +36,32 @@ public class Downloader implements Runnable {
         String url = this.urlInfo.getValue();
         le.write("Extraido: " + url);
 
-        if (this.crawler.status()) {
+        try {
+            String filePath = fileMgr.getDocument(url, this.id);
+
+            System.out.println("FILE PATH ==================================================");
+            System.out.println(filePath);
+            System.out.println("FILE PATH ==================================================");
+
+
             fileMgr.addUrl(this.id, url); // Save url
 
-            List<String> links = this.crawler.getLinks();
+            String document  = this.fileExtractor.getText(filePath);
+            fileMgr.addText(this.id, document); // Save document text
+
+            List<String> links = this.fileExtractor.extractUrls(document);
             fileMgr.addLinks(this.id, links); // Save links
             dbMan.inserURLList(links);
-
-            String document  = this.getDocument();
-            fileMgr.addText(this.id, document); // Save document text
 
             String plainText = this.tp.plainText(document);
             String finalText = this.tp.removeStopWords(plainText);
             fileMgr.addProcessedText(this.id, finalText); // Save processed text
             le.write("Visitado: " + url);
-        } else {
+        } catch (IOException e) {
             le.write("Error: " + url + " no disponible.");
         }
+
+
 
         dbMan.updateURL(this.urlInfo.getKey());
     }

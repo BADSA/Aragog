@@ -1,6 +1,9 @@
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.text.MessageFormat;
@@ -101,6 +104,15 @@ public class FileManager {
             e.getStackTrace();
         }
         return currId;
+    }
+
+    public String getDocument(String url, String id) throws IOException{
+        String ext = FilenameUtils.getExtension(url);
+        File file = new File(savePath +"/"+ id +"/raw."+ext);
+        FileUtils.copyURLToFile(new URL(url),file);
+
+        return file.getPath();
+
     }
 
 
