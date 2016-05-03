@@ -5,7 +5,7 @@ Araña de internet que obtiene documentos y los limpia para posteriormente poder
 
 # Compilación
 ```bash
-$ mvn clean compile assembly:single
+$ mvn clean install
 ```
 # Ejecución
 ```bash
